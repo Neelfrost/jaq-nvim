@@ -116,6 +116,9 @@ local function float(cmd)
 end
 
 local function term(cmd)
+    -- Get id of current window
+    local cur_win = vim.api.nvim_get_current_win()
+
     if config.behavior.closeexisting then
         for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
             local filetype = vim.api.nvim_buf_get_option(bufnr, "filetype")
@@ -145,6 +148,9 @@ local function term(cmd)
     if config.behavior.wincmd then
         vim.cmd("wincmd p")
     end
+
+    -- Activate original window using window id
+    vim.api.nvim_set_current_win(cur_win)
 end
 
 local function quickfix(cmd)
